@@ -1,26 +1,28 @@
-package com.ing.zoo;
+package com.ing.zoo.animals;
+
+import com.ing.zoo.animals.actions.iTrickAction;
+import com.ing.zoo.animals.feedingtypes.iCarnivore;
 
 import java.util.Random;
 
-public class Tiger {
-    public String name;
-    public String helloText;
+public class Tiger extends Animal implements iCarnivore, iTrickAction{
     public String eatText;
     public String trick;
 
     public Tiger()
     {
+        super.name = "Tiger";
+        super.helloText = "Rwaarrrr";
+        eatText = "NomNom RWaaarrr";
     }
 
     public void sayHello()
     {
-        helloText = "rraaarww";
         System.out.println(helloText);
     }
 
     public void eatMeat()
     {
-        eatText = "nomnomnom oink wubalubadubdub";
         System.out.println(eatText);
     }
 

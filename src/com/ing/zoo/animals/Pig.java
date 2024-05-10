@@ -1,32 +1,34 @@
-package com.ing.zoo;
+package com.ing.zoo.animals;
+
+import com.ing.zoo.animals.actions.iTrickAction;
+import com.ing.zoo.animals.feedingtypes.iCarnivore;
+import com.ing.zoo.animals.feedingtypes.iHerbivore;
 
 import java.util.Random;
 
-public class Pig {
-    public String name;
-    public String helloText;
+public class Pig extends Animal implements iHerbivore, iCarnivore, iTrickAction {
     public String eatText;
     public String trick;
 
     public Pig()
     {
+        super.name = "Pig";
+        super.helloText = "Oink Oink";
+        eatText = "munch munch oink";
     }
 
     public void sayHello()
     {
-        helloText = "splash";
         System.out.println(helloText);
     }
 
     public void eatLeaves()
     {
-        eatText = "munch munch oink";
         System.out.println(eatText);
     }
 
     public void eatMeat()
     {
-        eatText = "nomnomnom oink thx";
         System.out.println(eatText);
     }
 
