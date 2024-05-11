@@ -2,7 +2,7 @@
 
 ---
 
-Welcome to the ZooJava Console Application! This is a simple application that allows you to interact with animals based on their names.
+This is a simple application that allows you to interact with animals based on their names.
 
 ## Available Commands
 
