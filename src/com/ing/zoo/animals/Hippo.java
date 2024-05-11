@@ -1,19 +1,22 @@
 package com.ing.zoo.animals;
 
 import com.ing.zoo.animals.feedingtypes.iHerbivore;
-
+/**
+ * Hippo class representing a hippo animal in the zoo.
+ */
 public class Hippo extends Animal implements iHerbivore {
-    public String eatText;
+    private final String EAT_TEXT;
 
-    public Hippo()
+    public Hippo(String name)
     {
-        super.name = "Hippo";
+        super(name);
         super.helloText = "splash";
-        eatText = "munch munch lovely";
+        EAT_TEXT = "munch munch lovely";
     }
 
+    @Override
     public void eatLeaves()
     {
-        System.out.println(eatText);
+        System.out.println(EAT_TEXT);
     }
 }

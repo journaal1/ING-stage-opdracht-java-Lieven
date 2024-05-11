@@ -2,80 +2,77 @@ package com.ing.zoo;
 
 
 import com.ing.zoo.animals.*;
-import com.ing.zoo.animals.actions.iTrickAction;
-import com.ing.zoo.animals.feedingtypes.iCarnivore;
-import com.ing.zoo.animals.feedingtypes.iHerbivore;
+import com.ing.zoo.commands.CommandHandler;
+import com.ing.zoo.commands.Commands;
 
 import java.util.*;
 
+/**
+ * Zoo class that allows you to make each animal inside the zoo follow a command.
+ */
 public class Zoo {
     public static void main(String[] args)
     {
+        //Used a Hashmap to easily look up animals by name;
         Map<String, Animal> animals = new HashMap<>();
-        
-        String[] commands = new String[4];
-        commands[0] = "hello";
-        commands[1] = "give leaves";
-        commands[2] = "give meat";
-        commands[3] = "perform trick";
-        
-        String animalName;
-        String command = null;
+        Commands command = null;
         Animal animal = null;
 
-
-        Lion henk = new Lion();
-        henk.name = "henk";
+        //setup zoo
+        Lion henk = new Lion("henk");
+        Hippo elsa = new Hippo("elsa");
+        Pig dora = new Pig("dora");
+        Tiger wally = new Tiger("wally");
+        Zebra marty = new Zebra("marty");
+        Dog woefie = new Dog("woefie");
+        Monkey benny = new Monkey("benny");
         animals.put(henk.name, henk);
-        Hippo elsa = new Hippo();
-        elsa.name = "elsa";
         animals.put(elsa.name, elsa);
-        Pig dora = new Pig();
-        dora.name = "dora";
         animals.put(dora.name, dora);
-        Tiger wally = new Tiger();
-        wally.name = "wally";
         animals.put(wally.name, wally);
-        Zebra marty = new Zebra();
-        marty.name = "marty";
         animals.put(marty.name, marty);
+        animals.put(woefie.name, woefie);
+        animals.put(benny.name, benny);
 
+        //setup scanner
         Scanner scanner = new Scanner(System.in);
         System.out.print("Voer uw command in: ");
         String input = scanner.nextLine();
 
-        for (String cmd : commands) {
-            if (input.contains(cmd)) {
+        //checks if input contains real command. if it does trim the command from the input
+        for (Commands cmd : Commands.values()) {
+            String cmdString = cmd.name().toLowerCase().replace("_", " ");
+            if (input.contains(cmdString)) {
                 command = cmd;
+                input = input.substring(input.indexOf(cmdString) + cmdString.length()).trim();
+                animal = animals.get(input);
                 break;
             }
         }
-        if (command != null) {
-            animalName = input.substring(input.indexOf(command) + command.length()).trim();
-            animal = animals.get(animalName);
+
+        //handle invalid command
+        if(command == null){
+            System.out.println("Unknown command: " + input);
+            System.out.println("Try a valid command like: ");
+            for (Commands cmd : Commands.values()) {
+                System.out.println(cmd.name().toLowerCase().replace("_", " "));
+            }
+            return;
         }
 
-        if(animal != null){
-            if (command.equals(commands[0])) {
-                animal.sayHello();
-            }
-            else if (command.equals(commands[1]) && animal instanceof iHerbivore) {
-                ((iHerbivore) animal).eatLeaves();
-            }
-            else if (command.equals(commands[2]) && animal instanceof iCarnivore) {
-                ((iCarnivore) animal).eatMeat();
-            }
-            else if (command.equals(commands[3]) && animal instanceof iTrickAction) {
-                ((iTrickAction) animal).performTrick();
-            }
-            else {
-                System.out.println("Looks like animal named: " + animal.name);
-                System.out.println("can't perform that action");
-            }
+        //handle case of invalid name input
+        if(animal == null && !input.isEmpty()){
+            System.out.println(input + " is not a valid animal name");
+            System.out.println("Try a valid name like: ");
+            System.out.println(animals.keySet());
+            return;
         }
-        else
-        {
-            System.out.println("Unknown command: " + input);
+        //handle output for a specific animal or for all.
+        if(animal == null){
+            CommandHandler.handleCommand(command, animals);
+        }
+        else {
+            CommandHandler.handleCommand(command, animal, animals);
         }
     }
 }

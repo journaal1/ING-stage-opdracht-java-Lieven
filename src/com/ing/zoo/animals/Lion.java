@@ -1,24 +1,22 @@
 package com.ing.zoo.animals;
 
 import com.ing.zoo.animals.feedingtypes.iCarnivore;
-
+/**
+ * Lion class representing a Lion animal in the zoo.
+ */
 public class Lion extends Animal implements iCarnivore {
-    public String eatText;
+    private final String EAT_TEXT;
 
-    public Lion()
+    public Lion(String name)
     {
-        super.name = "Lion";
+        super(name);
         super.helloText = "roooaoaaaaar";
-        eatText = "nomnomnom thx mate";
+        EAT_TEXT = "nomnomnom thx mate";
     }
 
-    public void sayHello()
-    {
-        System.out.println(helloText);
-    }
-
+    @Override
     public void eatMeat()
     {
-        System.out.println(eatText);
+        System.out.println(EAT_TEXT);
     }
 }
